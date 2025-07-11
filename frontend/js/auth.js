@@ -9,7 +9,7 @@ class AuthManager {
     async initializeAuth() {
         const token = localStorage.getItem('authToken');
         if (token) {
-            window.api.setToken(token);
+            api.setToken(token);
             try {
                 const response = await api.getCurrentUser();
                 if (response.success) {
@@ -35,7 +35,7 @@ class AuthManager {
             const response = await api.login(email, password);
             
             if (response.success) {
-                api.setToken(response.token);
+                window.api.setToken(response.token);
                 this.currentUser = response.user;
                 this.isAuthenticated = true;
                 
