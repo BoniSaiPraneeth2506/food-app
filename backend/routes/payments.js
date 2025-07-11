@@ -154,12 +154,24 @@ router.post('/confirm-payment', auth, [
 // @route   POST /api/payments/webhook
 // @desc    Handle Stripe webhooks
 // @access  Public (Stripe webhook)
-router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+router.post('/webhook', (req, res, next) => {
+  // Skip JSON parsing for webhook
+  if (req.originalUrl === '/api/payments/webhook') {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+}, express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    if (process.env.STRIPE_WEBHOOK_SECRET) {
+      event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    } else {
+      // For development without webhook secret
+      event = JSON.parse(req.body);
+    }
   } catch (err) {
     console.error('Webhook signature verification failed:', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
@@ -227,7 +239,7 @@ router.get('/config', (req, res) => {
   res.json({
     success: true,
     data: {
-      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY
+      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || 'pk_test_dummy_key_for_development'
     }
   });
 });

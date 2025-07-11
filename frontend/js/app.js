@@ -15,16 +15,16 @@ class FoodieHubApp {
             // Initialize authentication
             const isAuthenticated = await window.authManager.initializeAuth();
             
-            if (isAuthenticated) {
-                // Initialize all managers
-                await this.initializeManagers();
-                
-                // Connect to socket for real-time updates
-                window.socketManager.connect();
-            }
+            // Always initialize menu (public access)
+            await window.menuManager.initialize();
             
             // Initialize event listeners
             this.initializeEventListeners();
+            
+            if (isAuthenticated) {
+                // Initialize authenticated managers
+                await this.initializeAuthenticatedManagers();
+            }
             
             // Hide loading screen
             this.hideLoadingScreen();
@@ -38,22 +38,22 @@ class FoodieHubApp {
         }
     }
 
-    async initializeManagers() {
+    async initializeAuthenticatedManagers() {
         try {
-            // Initialize menu manager
-            await window.menuManager.initialize();
-            
             // Initialize orders manager
             await window.ordersManager.initialize();
             
             // Initialize profile manager
             await window.profileManager.initialize();
             
+            // Connect to socket for real-time updates
+            window.socketManager.connect();
+            
             // Render current view
             this.renderCurrentView();
             
         } catch (error) {
-            console.error('Failed to initialize managers:', error);
+            console.error('Failed to initialize authenticated managers:', error);
             throw error;
         }
     }

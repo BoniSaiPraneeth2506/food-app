@@ -214,7 +214,9 @@ const sampleMenuItems = [
 async function seedDatabase() {
   try {
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/foodie-hub');
+    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/foodie-hub';
+    console.log('Connecting to MongoDB:', mongoUri);
+    await mongoose.connect(mongoUri);
     console.log('✅ Connected to MongoDB');
 
     // Clear existing data

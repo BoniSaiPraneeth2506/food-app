@@ -1,0 +1,32 @@
+{
+  "name": "foodie-hub",
+  "version": "1.0.0",
+  "description": "Smart Canteen Order Management System",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
+    "backend:dev": "cd backend && npm run dev",
+    "frontend:dev": "cd frontend && npx http-server -p 3000 -c-1",
+    "backend:install": "cd backend && npm install",
+    "frontend:install": "cd frontend && echo 'Frontend uses vanilla JS - no install needed'",
+    "install:all": "npm run backend:install && npm run frontend:install",
+    "seed": "cd backend && npm run seed",
+    "setup": "npm run install:all && npm run seed",
+    "start": "npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "http-server": "^14.1.1"
+  },
+  "keywords": [
+    "food",
+    "ordering",
+    "canteen",
+    "management",
+    "nodejs",
+    "mongodb",
+    "stripe"
+  ],
+  "author": "FoodieHub Team",
+  "license": "MIT"
+}

@@ -14,14 +14,28 @@ class PaymentManager {
     async initializeStripe() {
         try {
             // Get Stripe publishable key from backend
-            const response = await api.getStripeConfig();
+            const response = await window.api.getStripeConfig();
             if (response.success && response.data.publishableKey) {
                 this.stripe = Stripe(response.data.publishableKey);
+                this.elements = this.stripe.elements();
+                this.setupCardElement();
+            } else {
+                console.warn('Stripe not configured - using test mode');
+                // Use a test publishable key for development
+                this.stripe = Stripe('pk_test_51234567890abcdef'); // Dummy key for testing
                 this.elements = this.stripe.elements();
                 this.setupCardElement();
             }
         } catch (error) {
             console.error('Failed to initialize Stripe:', error);
+            // Fallback for development
+            try {
+                this.stripe = Stripe('pk_test_51234567890abcdef'); // Dummy key
+                this.elements = this.stripe.elements();
+                this.setupCardElement();
+            } catch (fallbackError) {
+                console.error('Stripe fallback failed:', fallbackError);
+            }
         }
     }
 
@@ -122,7 +136,7 @@ class PaymentManager {
             this.updatePaymentButton(true);
 
             // Create payment intent
-            const paymentIntentResponse = await api.createPaymentIntent(this.currentOrder._id);
+            const paymentIntentResponse = await window.api.createPaymentIntent(this.currentOrder._id);
             
             if (!paymentIntentResponse.success) {
                 throw new Error(paymentIntentResponse.message || 'Failed to create payment intent');
@@ -147,7 +161,7 @@ class PaymentManager {
 
             if (paymentIntent.status === 'succeeded') {
                 // Confirm payment with backend
-                await api.confirmPayment(paymentIntent.id);
+                await window.api.confirmPayment(paymentIntent.id);
                 
                 // Clear cart
                 window.cartManager.clearCart();

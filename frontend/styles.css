@@ -636,6 +636,19 @@ body {
     margin-bottom: var(--spacing-xl);
 }
 
+.menu-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--spacing-2xl);
+    color: var(--text-secondary);
+}
+
+.menu-empty i {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-muted);
+}
+
 .menu-item {
     background: var(--surface);
     border-radius: var(--radius-lg);

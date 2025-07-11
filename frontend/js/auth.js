@@ -9,6 +9,7 @@ class AuthManager {
     async initializeAuth() {
         const token = localStorage.getItem('authToken');
         if (token) {
+            window.api.setToken(token);
             try {
                 const response = await api.getCurrentUser();
                 if (response.success) {
@@ -46,6 +47,11 @@ class AuthManager {
                 // Initialize socket connection
                 if (window.socketManager) {
                     window.socketManager.connect();
+                }
+                
+                // Initialize managers after successful login
+                if (window.app && window.app.initializeManagers) {
+                    await window.app.initializeManagers();
                 }
                 
                 return true;

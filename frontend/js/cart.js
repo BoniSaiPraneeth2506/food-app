@@ -54,7 +54,7 @@ class CartManager {
         showToast(`${menuItem.name} added to cart!`, 'success');
         
         // Add animation effect to button
-        const button = event?.target;
+        const button = window.event?.target;
         if (button) {
             button.style.transform = 'scale(0.95)';
             setTimeout(() => {
@@ -219,7 +219,7 @@ class CartManager {
             };
 
             // Create order
-            const response = await api.createOrder(orderData);
+            const response = await window.api.createOrder(orderData);
             
             if (response.success) {
                 const order = response.data;

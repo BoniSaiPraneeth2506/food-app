@@ -31,7 +31,8 @@ class OrdersManager {
                 params.status = this.statusFilter;
             }
             
-            const response = await api.getOrders(params);
+            const response = await window.api.getOrders(params);
+            const response = await window.api.getOrders(params);
             
             if (response.success) {
                 const { orders, pagination } = response.data;
@@ -142,7 +143,7 @@ class OrdersManager {
 
     async loadOrderStats() {
         try {
-            const response = await api.getOrderStats();
+            const response = await window.api.getOrderStats();
             if (response.success) {
                 this.updateProfileStats(response.data);
             }

@@ -9,7 +9,12 @@ class NotificationManager {
     }
 
     connect() {
-        if (!window.authManager.isAuthenticated || this.isConnected) {
+        if (this.isConnected) {
+            return;
+        }
+        
+        if (!window.authManager || !window.authManager.isAuthenticated) {
+            console.log('Not authenticated, skipping socket connection');
             return;
         }
 

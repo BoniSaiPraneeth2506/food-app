@@ -39,7 +39,8 @@ class MenuManager {
                 }
             });
             
-            const response = await api.getMenuItems(params);
+            const response = await window.api.getMenuItems(params);
+            const response = await window.api.getMenuItems(params);
             
             if (response.success) {
                 const { items, pagination } = response.data;
@@ -67,7 +68,7 @@ class MenuManager {
 
     async loadCategories() {
         try {
-            const response = await api.getCategories();
+            const response = await window.api.getCategories();
             if (response.success) {
                 this.categories = response.data;
                 this.renderCategoryFilter();
@@ -94,7 +95,7 @@ class MenuManager {
         
         if (this.menuItems.length === 0) {
             menuGrid.innerHTML = `
-                <div class="col-span-full text-center py-8">
+                <div class="menu-empty">
                     <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
                     <p class="text-gray-500">No items found matching your criteria</p>
                 </div>
