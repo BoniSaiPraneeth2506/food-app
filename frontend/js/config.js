@@ -1,6 +1,6 @@
 // Configuration
 const CONFIG = {
-    API_BASE_URL: window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api',
+    API_BASE_URL: window.location.protocol === 'https:' ? 'https://localhost:5000/api' : 'http://localhost:5000/api',
     SOCKET_URL: window.location.hostname === 'localhost' ? 'http://localhost:5000' : '',
     STRIPE_PUBLISHABLE_KEY: null, // Will be loaded from API
     

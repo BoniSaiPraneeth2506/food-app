@@ -50,8 +50,8 @@ class AuthManager {
                 }
                 
                 // Initialize managers after successful login
-                if (window.app && window.app.initializeManagers) {
-                    await window.app.initializeManagers();
+                if (window.app && window.app.initializeAuthenticatedManagers) {
+                    await window.app.initializeAuthenticatedManagers();
                 }
                 
                 return true;

@@ -40,7 +40,6 @@ class MenuManager {
             });
             
             const response = await window.api.getMenuItems(params);
-            const response = await window.api.getMenuItems(params);
             
             if (response.success) {
                 const { items, pagination } = response.data;

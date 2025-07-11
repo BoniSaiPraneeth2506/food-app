@@ -32,7 +32,6 @@ class OrdersManager {
             }
             
             const response = await window.api.getOrders(params);
-            const response = await window.api.getOrders(params);
             
             if (response.success) {
                 const { orders, pagination } = response.data;
