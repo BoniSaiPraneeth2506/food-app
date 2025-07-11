@@ -147,6 +147,13 @@ class AuthManager {
 
     updateUI() {
         if (this.isAuthenticated && this.currentUser) {
+            // Hide login button and show user menu
+            const loginNavBtn = document.getElementById('loginNavBtn');
+            const userActions = document.querySelector('.user-actions');
+            
+            if (loginNavBtn) loginNavBtn.style.display = 'none';
+            if (userActions) userActions.style.display = 'flex';
+            
             // Update user display
             const userNameDisplay = document.getElementById('userNameDisplay');
             const profileUserName = document.getElementById('profileUserName');
@@ -177,6 +184,13 @@ class AuthManager {
             if (profileName) profileName.value = this.currentUser.name || '';
             if (profileEmail) profileEmail.value = this.currentUser.email || '';
             if (profilePhone) profilePhone.value = this.currentUser.phone || '';
+        } else {
+            // Show login button and hide user menu
+            const loginNavBtn = document.getElementById('loginNavBtn');
+            const userActions = document.querySelector('.user-actions');
+            
+            if (loginNavBtn) loginNavBtn.style.display = 'flex';
+            if (userActions) userActions.style.display = 'none';
         }
     }
 
@@ -241,6 +255,11 @@ class AuthManager {
             }
         });
 
+        // Login navigation button
+        document.getElementById('loginNavBtn').addEventListener('click', () => {
+            this.showAuthModal();
+        });
+
         // Logout
         document.getElementById('logoutBtn').addEventListener('click', (e) => {
             e.preventDefault();
@@ -271,7 +290,6 @@ class AuthManager {
             if (!userMenu.contains(e.target)) {
                 dropdown.classList.remove('show');
             }
-        });
     }
 }
 
