@@ -290,6 +290,8 @@ class AuthManager {
             if (!userMenu.contains(e.target)) {
                 dropdown.classList.remove('show');
             }
+            }
+        )
     }
 }
 
