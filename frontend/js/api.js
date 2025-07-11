@@ -49,7 +49,7 @@ class API {
             console.error('API request failed:', error);
             
             // Handle authentication errors
-            if (response && (response.status === 401 || error.message.includes('401') || error.message.includes('token'))) {
+            if (error.message.includes('401') || error.message.includes('token') || error.message.includes('Unauthorized')) {
                 this.setToken(null);
                 if (window.authManager) {
                     window.authManager.logout();

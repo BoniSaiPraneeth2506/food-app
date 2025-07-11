@@ -41,7 +41,7 @@ class MenuManager {
             
             const response = await window.api.getMenuItems(params);
             
-            if (response.success) {
+            if (response && response.success) {
                 const { items, pagination } = response.data;
                 
                 if (append) {
@@ -68,7 +68,7 @@ class MenuManager {
     async loadCategories() {
         try {
             const response = await window.api.getCategories();
-            if (response.success) {
+            if (response && response.success) {
                 this.categories = response.data;
                 this.renderCategoryFilter();
             }

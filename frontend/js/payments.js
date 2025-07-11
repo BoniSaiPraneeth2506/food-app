@@ -15,7 +15,7 @@ class PaymentManager {
         try {
             // Get Stripe publishable key from backend
             const response = await window.api.getStripeConfig();
-            if (response.success && response.data.publishableKey) {
+            if (response && response.success && response.data.publishableKey) {
                 this.stripe = Stripe(response.data.publishableKey);
                 this.elements = this.stripe.elements();
                 this.setupCardElement();
